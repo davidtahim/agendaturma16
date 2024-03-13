@@ -12,6 +12,13 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    public void telaPrincipal(){
+        EditText etNome = (EditText) findViewById(R.id.etNomeCad) ;
+        EditText etFone = (EditText) findViewById(R.id.etFoneCad) ;
+        Button btGrava = (Button)findViewById(R.id.btGravarCad) ;
+        Button btConsulta = (Button)findViewById(R.id.btConsultarCad) ;
+    }   Button btFecha = (Button)findViewById(R.id.btFechar) ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
