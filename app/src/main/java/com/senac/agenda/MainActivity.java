@@ -14,47 +14,76 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
-SQLiteDatabase db = null;
-Cursor cursor;
+    SQLiteDatabase db = null;
+    Cursor cursor;
 
-public void abreCriabd () {
-    try {
-        db = openOrCreateDatabase("banco",MODE_PRIVATE,null);
-    } catch (Exception erro) {
-        msg("Erro ao criar ou abrir o banco de dados");
-    }
-    try {
-        db.execSQL("CREATE TABLE IF NOT EXISTS contatos (id INTEGER PRIMARY KEY, nome TEXT, fone TEXT);");
+    public void abreCriabd() {
+        try {
+            db = openOrCreateDatabase("banco", MODE_PRIVATE, null);
+        } catch (Exception erro) {
+            msg("Erro ao criar ou abrir o banco de dados");
+        }
+        try {
+            db.execSQL("CREATE TABLE IF NOT EXISTS contatos (id INTEGER PRIMARY KEY, nome TEXT, fone TEXT);");
 
-    } catch (Exception erro) {
-        msg("Erro ao criar a tabela");
-    }
-    // finally {
-    //    msg("Tabela criada com sucesso");
-    //}
-
-}
-
-public  void fechadb(){
-    db.close();
-}
-
-public void insereRegistro(){
-    try {
-        abreCriabd();
-        EditText etNome = (EditText) findViewById(R.id.etNomeCad) ;
-        EditText etFone = (EditText) findViewById(R.id.etFoneCad) ;
-        db.execSQL("INSERT INTO contatos (nome, fone) VALUES ('" + etNome.getText().toString() + "','" + etFone.getText().toString()+ "')");
-        msg("Registro Inserido");
-        etNome.setText(null);
-        etFone.setText(null);
-        etNome.requestFocus();
-        fechadb();
-    } catch (Exception erro) {
-        msg("Erro ao inserir no banco de dados");
+        } catch (Exception erro) {
+            msg("Erro ao criar a tabela");
+        }
+        // finally {
+        //    msg("Tabela criada com sucesso");
+        //}
 
     }
-}
+
+    public void fechadb() {
+        db.close();
+    }
+
+    public void insereRegistro() {
+        try {
+            abreCriabd();
+            EditText etNome = (EditText) findViewById(R.id.etNomeCad);
+            EditText etFone = (EditText) findViewById(R.id.etFoneCad);
+            db.execSQL("INSERT INTO contatos (nome, fone) VALUES ('" + etNome.getText().toString() + "','" + etFone.getText().toString() + "')");
+            msg("Registro Inserido");
+            etNome.setText(null);
+            etFone.setText(null);
+            etNome.requestFocus();
+            fechadb();
+        } catch (Exception erro) {
+            msg("Erro ao inserir no banco de dados");
+
+        }
+    }
+
+    public void mostrarDados() {
+        TextView etNome = (TextView) findViewById(R.id.tvNomeCon);
+        TextView etFone = (TextView) findViewById(R.id.tvFoneCon);
+
+        etNome.setText(cursor.getString(cursor.getColumnIndex("nome")));
+        etFone.setText(cursor.getString(cursor.getColumnIndex("fone")));
+    }
+
+    public boolean buscarDados() {
+        try {
+            abreCriabd();
+            cursor = db.query("contatos", new String[]{"nome", "fone"},
+                    null, null, null, null, null, null
+            );
+            if (cursor.getCount() != 0) {
+                cursor.moveToFirst();
+                mostrarDados();
+                return true;
+            } else {
+                msg("Nenhum registro");
+                return false;
+            }
+        } catch(Exception erro){
+                msg("Erro ao buscar registros");
+                return false;
+            }
+
+    }
 
     public void telaPrincipal() {
         setContentView(R.layout.activity_main);
@@ -95,7 +124,7 @@ public void insereRegistro(){
         Button btAnterior = (Button) findViewById(R.id.btAnteCon) ;
         Button btProximo = (Button) findViewById(R.id.btProxCon) ;
         Button btVoltar = (Button) findViewById(R.id.btVoltarCon) ;
-
+        buscarDados();
     btAnterior.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
