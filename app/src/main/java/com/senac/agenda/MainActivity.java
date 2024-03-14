@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             // ir para o anterior
+            antReg();
         }
     });
 
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             // ir para o proximo
+            proxReg();
         }
     });
 
@@ -143,12 +145,37 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             // voltar para o início
+            fechadb();
             telaPrincipal();
         }
     });
 
     }
+    public void proxReg() {
+        try {
+            cursor.moveToNext();
+            mostrarDados();
+        } catch (Exception erro) {
+            if (cursor.isAfterLast()) {
+                msg("Não há mais registros");
+            } else {
+                msg("Erro ao navegar");
+            }
+        }
+    }
 
+    public void antReg() {
+        try {
+            cursor.moveToPrevious();
+            mostrarDados();
+        } catch (Exception erro) {
+            if (cursor.isBeforeFirst()) {
+                msg("Não há registros anteriores");
+            } else {
+                msg("Erro ao navegar");
+            }
+        }
+    }
     public void msg(String txt){
         AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
         adb.setMessage(txt);
