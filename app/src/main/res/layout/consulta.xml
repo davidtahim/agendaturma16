@@ -40,7 +40,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="115dp"
-        android:text="Telefone"
+        android:text="Telefone:"
         android:textSize="34sp"
         android:textStyle="bold" />
 
@@ -54,7 +54,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="175dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btAnteCon"
@@ -70,11 +71,18 @@
 
     <Button
         android:id="@+id/btProxCon"
-        android:layout_width="wrap_content"
+        android:layout_width="163dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="252dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="255dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginRight="49dp"
+        android:layout_toEndOf="@+id/btAnteCon"
+        android:layout_toRightOf="@+id/btAnteCon"
         android:text="Próximo" />
 
     <Button

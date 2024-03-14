@@ -14,6 +14,48 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
+SQLiteDatabase db = null;
+Cursor cursor;
+
+public void abreCriabd () {
+    try {
+        db = openOrCreateDatabase("banco",MODE_PRIVATE,null);
+    } catch (Exception erro) {
+        msg("Erro ao criar ou abrir o banco de dados");
+    }
+    try {
+        db.execSQL("CREATE TABLE IF NOT EXISTS contatos (id INTEGER PRIMARY KEY, nome TEXT, fone TEXT);");
+
+    } catch (Exception erro) {
+        msg("Erro ao criar a tabela");
+    }
+    // finally {
+    //    msg("Tabela criada com sucesso");
+    //}
+
+}
+
+public  void fechadb(){
+    db.close();
+}
+
+public void insereRegistro(){
+    try {
+        abreCriabd();
+        EditText etNome = (EditText) findViewById(R.id.etNomeCad) ;
+        EditText etFone = (EditText) findViewById(R.id.etFoneCad) ;
+        db.execSQL("INSERT INTO contatos (nome, fone) VALUES ('" + etNome.getText().toString() + "','" + etFone.getText().toString()+ "')");
+        msg("Registro Inserido");
+        etNome.setText(null);
+        etFone.setText(null);
+        etNome.requestFocus();
+        fechadb();
+    } catch (Exception erro) {
+        msg("Erro ao inserir no banco de dados");
+
+    }
+}
+
     public void telaPrincipal() {
         setContentView(R.layout.activity_main);
         EditText etNome = (EditText) findViewById(R.id.etNomeCad);
@@ -26,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Gravação
+                insereRegistro();
             }
         });
 
@@ -41,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // fechar
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
         });
     }
