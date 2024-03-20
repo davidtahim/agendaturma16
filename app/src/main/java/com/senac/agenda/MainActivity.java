@@ -85,6 +85,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void excluirRegistro() {
+        try {
+            abreCriabd();
+            db.execSQL("DELETE FROM contatatos WHERE id =" + cursor.getInt(cursor.getColumnIndex("id")));
+            msg("Registro excluído");
+            cursor = db.rawQuery("SELECT * FROM contatos", null);
+            mostrarDados();
+            fechadb();
+        } catch (Exception erro) {
+            msg("Erro ao excluir o registro");
+        }
+    }
+
+    public void editarRegistro() {
+        try {
+        abreCriabd();
+        int id = cursor.getInt(cursor.getColumnIndex("id"));
+        String nome = cursor.getString(cursor.getColumnIndex("nome"));
+        String fone = cursor.getString(cursor.getColumnIndex("fone"));
+        fechadb();
+        } catch (Exception erro) {
+            msg("Erro ao editar registro");
+        }
+    }
+
     public void telaPrincipal() {
         setContentView(R.layout.activity_main);
         EditText etNome = (EditText) findViewById(R.id.etNomeCad);
@@ -124,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
         Button btAnterior = (Button) findViewById(R.id.btAnteCon) ;
         Button btProximo = (Button) findViewById(R.id.btProxCon) ;
         Button btVoltar = (Button) findViewById(R.id.btVoltarCon) ;
+        Button btExcluir = (Button) findViewById(R.id.btExcluirCon);
+        Button btEditar = (Button) findViewById(R.id.btEditarCon);
         buscarDados();
     btAnterior.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -149,7 +176,19 @@ public class MainActivity extends AppCompatActivity {
             telaPrincipal();
         }
     });
-
+    btExcluir.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //excluir registro
+            excluirRegistro();
+        }
+    });
+    btEditar.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            editarRegistro();
+        }
+    });
     }
     public void proxReg() {
         try {

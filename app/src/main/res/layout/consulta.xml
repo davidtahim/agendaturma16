@@ -96,4 +96,27 @@
         android:layout_marginLeft="46dp"
         android:layout_marginTop="322dp"
         android:text="Voltar" />
+
+    <Button
+        android:id="@+id/btExcluirCon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="324dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="Excluir" />
+
+    <Button
+        android:id="@+id/btEditarCon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="322dp"
+        android:layout_marginEnd="129dp"
+        android:layout_marginRight="129dp"
+        android:text="Editar" />
 </RelativeLayout>
